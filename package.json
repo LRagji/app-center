@@ -10,8 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-request-proxy": "^2.2.2",
-    "inject-html": "^1.1.2"
+    "express-session": "^1.16.2",
+    "inject-html": "^1.1.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }

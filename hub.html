@@ -70,16 +70,16 @@
     <!-- Side navigation -->
     <div class="sidenav">
         <div class="btn-group">
-            <button onclick="navigate('/app1/')">Application 1</button>
-            <button onclick="navigate('/app2/')">Application 2</button>
-            <button>User Management</button>
+            <button onclick="navigate('/apps/app1/')">Application 1</button>
+            <button onclick="navigate('/apps/app2/')">Application 2</button>
+            <form method="POST" action="/logout"><button type="submit">Logout</button></form>
         </div>
     </div>
 
 
     <!-- Page content -->
     <div class="main">
-        <iframe id="frame" src="/app1/" frameborder="0" noresize="noresize" style="height: 100vh;width: 100%;">
+        <iframe id="frame" frameborder="0" noresize="noresize" style="height: 100vh;width: 100%;">
         </iframe>
     </div>
 
@@ -89,6 +89,12 @@
             let portal = document.getElementById("frame");
             portal.src = appRelativeUrl;
         }
+
+        //Default Navigate
+        window.onload = () => {
+            navigate('/apps/app1/');
+        }
+
     </script>
 </body>
 
