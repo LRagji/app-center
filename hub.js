@@ -33,7 +33,7 @@ passport.use(new strategy((username, password, done) => {
     //return done(null, false, { message: 'Password fails length validation [50,1] ' + username });
 
     //Sucess Example
-    return done(null, { ID: "KK" });
+    return done(null, { id: username });
 }));
 
 passport.serializeUser(function (user, cb) {

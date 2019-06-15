@@ -17,6 +17,8 @@
     "express-request-proxy": "^2.2.2",
     "express-session": "^1.16.2",
     "inject-html": "^1.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "memory-cache": "^0.2.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
   }
