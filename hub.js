@@ -63,6 +63,7 @@ app.post('/logout', [(req, res) => {
     res.redirect('/login');
 }]);
 
-
+//TODO: Non Prod Just for easy access
+app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
 
 app.listen(port, () => console.log(`Spartans Hub active on port ${port}!`))
