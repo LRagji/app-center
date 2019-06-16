@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Spartans Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         /* Needed for iFrame */
         html body {
@@ -17,7 +18,7 @@
         .sidenav {
             height: 100%;
             /* Full-height: remove this if you want "auto" height */
-            width: 160px;
+            width: 10%;
             /* Set the width of the sidebar */
             position: fixed;
             /* Fixed Sidebar (stay in place on scroll) */
@@ -26,21 +27,23 @@
             top: 0;
             /* Stay at the top */
             left: 0;
-            background-color: #111111;
+            background: rgb(81, 67, 177);
+            background: linear-gradient(0deg, rgba(81, 67, 177, 1) 15%, rgba(0, 212, 255, 1) 100%);
             /* Black */
             overflow-x: hidden;
             /* Disable horizontal scroll */
-            padding-top: 20px;
+            text-align: center;
+            color:white;
         }
 
         /* Style page content */
         .main {
-            margin-left: 160px;
+            margin-left: 10%;
         }
     </style>
     <style>
         .btn-group button {
-            background-color: #111111;
+            background-color:transparent;
             border: 0px;
             color: white;
             /* White text */
@@ -61,7 +64,7 @@
 
         /* Add a background color on hover */
         .btn-group button:hover {
-            background-color: #3e8e41;
+            background-color: #005EB8;
         }
     </style>
 </head>
@@ -69,9 +72,11 @@
 <body>
     <!-- Side navigation -->
     <div class="sidenav">
+        <h1>OFE</h1>
+       <hr>
         <div class="btn-group">
-            <button onclick="navigate('/apps/app1/')">Application 1</button>
-            <button onclick="navigate('/apps/app2/')">Application 2</button>
+            <button onclick="navigate('/apps/app1/')"><i class="material-icons" style="vertical-align:middle" >computer</i> Application 1</button>
+            <button onclick="navigate('/apps/app2/')"><i class="material-icons" style="vertical-align:middle" >computer</i> Application 2</button>
             <form method="POST" action="/logout"><button type="submit">Logout</button></form>
         </div>
     </div>
