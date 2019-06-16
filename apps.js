@@ -9,7 +9,7 @@ var cache = require('memory-cache');
 //App Routing
 appRouter.use('/app1/*', (req, res, next) => {  //TODO:Example App1
     proxy({
-        'url': 'http://localhost:3000/' + "*",
+        'url': 'https://alerts-dobara-hub.run.aws-usw02-pr.ice.predix.io/' + "*",
         "headers": generateHeaders(req.user.id),
     })(req, res, next)
 });

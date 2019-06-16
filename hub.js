@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 const path = require('path');
 const cookieSecret = "retaliation"; //TODO:Move to secure store
 const cookieName = "hub-db89960b1248";// This should be a unique ID else session will collapse with each other.

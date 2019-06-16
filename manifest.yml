@@ -1,0 +1,8 @@
+---
+applications:
+  - name: app-center
+    buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git
+    memory: 2G
+    instances: 1
+    command: node hub.js
+
