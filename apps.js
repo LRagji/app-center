@@ -16,7 +16,7 @@ appRouter.use('/app1/*', (req, res, next) => {  //TODO:Example App1
 
 appRouter.use('/app2/*', (req, res, next) => {  //TODO: Example App2
     proxy({
-        'url': 'https://asset-dashboard.run.aws-usw02-pr.ice.predix.io/' + "*",
+        'url': 'http://localhost:8080/' + "*",
         "headers": generateHeaders(req.user.id),
     })(req, res, next)
 });
