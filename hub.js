@@ -51,7 +51,7 @@ app.use(passport.session());
 
 
 //Secure Router
-app.use('/apps/', [ensureLogin.ensureLoggedIn('/login'), require('./apps')]);
+app.use('/apps/', [ensureLogin.ensureLoggedIn('/login'), require('./server-modules/proxy-service')]);
 
 
 //Login Router
