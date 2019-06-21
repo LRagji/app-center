@@ -21,6 +21,13 @@ appRouter.use('/app2/*', (req, res, next) => {  //TODO: Example App2
     })(req, res, next)
 });
 
+appRouter.use('/app3/*', (req, res, next) => {  //TODO: Example App2
+    proxy({
+        'url': 'http://localhost:3000/' + "*",
+        "headers": generateHeaders(req.user.id),
+    })(req, res, next)
+});
+
 appRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/../hub.html'));
 });
