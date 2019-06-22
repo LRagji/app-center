@@ -8,6 +8,8 @@ A simple application host, to serve multiple apps as a combined application.
 3. Offload Login, Logout, Session management, User Preferences,Error handling, Notifications and Profiles.
 4. Abstraction from other apps at the same time enabling deep linking or context based navigations between apps.
 5. Multi varitey app strategy supported MPA to SPA, and multi language support.
+6. Supported on Chrome, Firefox, Safari can be supported % of userbase.
+7. Session tracking and linking requests together for security and auditing purposes.
 
 ## Steps to onbard an app:
 1. Register you app name(each app in the app center is uniquely identified with name.)
@@ -38,5 +40,6 @@ A simple application host, to serve multiple apps as a combined application.
 5. rate-limiter-flexible for rate limiting
 6. Back & Forward Navigations
 7. Error Handling
+8. Multi Browser Support Chrome, Firefox 
 
 
