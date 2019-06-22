@@ -40,6 +40,8 @@ A simple application host, to serve multiple apps as a combined application.
 5. rate-limiter-flexible for rate limiting
 6. Back & Forward Navigations
 7. Error Handling
-8. Multi Browser Support Chrome, Firefox 
+8. Multi Browser Support Chrome, Firefox
+9. Use service worker for login and logout detection.
+10. Use service worker for application url redirections. 
 
 
