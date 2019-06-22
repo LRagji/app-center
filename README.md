@@ -5,7 +5,7 @@ A simple application host, to serve multiple apps as a combined application.
 
 1. When you have a large application in a multi-team enviroment with different release schedules.
 2. Containerize apps with respect to their responsibilities but deploy them as one whole ptoduct to final customer.
-3. Offload Login, Logout, Session management, User Preferences and Profiles.
+3. Offload Login, Logout, Session management, User Preferences,Error handling, Notifications and Profiles.
 4. Abstraction from other apps at the same time enabling deep linking or context based navigations between apps.
 5. Multi varitey app strategy supported MPA to SPA, and multi language support.
 
@@ -27,7 +27,16 @@ A simple application host, to serve multiple apps as a combined application.
 2. The app is non polished one day worth of work.(Test,Session Management,User Logins,UX needs to be completed.)
 3. Context based navigation or Data transfer between apps is currently achived with either `window.parent` or `postmessages`
 
-## TODO's
+<!-- ## Feature's
+1. Complete abstraction at client side -->
+
+## Idea's
 1. Use redis cache for session storage.
 2. Try using session to route requests to right app depending on the user selection.
- 
+3. csurf package for XSRF attacks
+4. Add helmet for security 
+5. rate-limiter-flexible for rate limiting
+6. Back & Forward Navigations
+7. Error Handling
+
+
