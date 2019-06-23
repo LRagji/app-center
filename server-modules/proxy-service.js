@@ -9,14 +9,14 @@ var cache = require('memory-cache');
 //App Routing
 appRouter.use('/app1/*', (req, res, next) => {  //TODO:Example App1
     proxy({
-        'url': 'https://alerts-dobara-hub.run.aws-usw02-pr.ice.predix.io/' + "*",
-        "headers": generateHeaders(req.user.id),
+        'url': 'https://smart-compressor.eic.fullstream.ai/' + "*",
+        //"headers": generateHeaders(req.user.id),
     })(req, res, next)
 });
 
 appRouter.use('/app2/*', (req, res, next) => {  //TODO: Example App2
     proxy({
-        'url': 'https://asset-dashboard.run.aws-usw02-pr.ice.predix.io/' + "*",
+        'url': 'https://lragji.github.io/' + "*",
         "headers": generateHeaders(req.user.id),
     })(req, res, next)
 });

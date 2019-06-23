@@ -66,4 +66,7 @@ app.post('/logout', [(req, res) => {
 //TODO: Non Prod Just for easy access
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
 
+//Service Worker
+app.get('/magician', (req, res) => res.sendFile(path.join(__dirname + '/client-modules/magician.js')));
+
 app.listen(port, () => console.log(`Spartans Hub active on port ${port}!`))

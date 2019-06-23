@@ -33,7 +33,7 @@
             overflow-x: hidden;
             /* Disable horizontal scroll */
             text-align: center;
-            color:white;
+            color: white;
         }
 
         /* Style page content */
@@ -43,7 +43,7 @@
     </style>
     <style>
         .btn-group button {
-            background-color:transparent;
+            background-color: transparent;
             border: 0px;
             color: white;
             /* White text */
@@ -73,10 +73,12 @@
     <!-- Side navigation -->
     <div class="sidenav">
         <h1>OFE</h1>
-       <hr>
+        <hr>
         <div class="btn-group">
-            <button onclick="navigate('/apps/app1/')"><i class="material-icons" style="vertical-align:middle" >computer</i> Application 1</button>
-            <button onclick="navigate('/apps/app2/')"><i class="material-icons" style="vertical-align:middle" >computer</i> Application 2</button>
+            <button onclick="navigate('/apps/app1/')"><i class="material-icons"
+                    style="vertical-align:middle">computer</i> Application 1</button>
+            <button onclick="navigate('/apps/app2/')"><i class="material-icons"
+                    style="vertical-align:middle">computer</i> Application 2</button>
             <form method="POST" action="/logout"><button type="submit">Logout</button></form>
         </div>
     </div>
@@ -100,6 +102,23 @@
             navigate('/apps/app1/');
         }
 
+    </script>
+
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/magician', { scope: '/' })
+                .then(function (reg) {
+                    // registration worked
+                    console.log('Registration succeeded. Scope is ' + reg.scope);
+                }).catch(function (error) {
+                    // registration failed
+                    console.log('Registration failed with ' + error);
+                });
+        }
+        else {
+            console.log("No service worker support!!");
+        }
     </script>
 </body>
 
