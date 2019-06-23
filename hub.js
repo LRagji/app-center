@@ -6,7 +6,7 @@ const cookieSecret = "retaliation"; //TODO:Move to secure store
 const cookieName = "hub-db89960b1248";// This should be a unique ID else session will collapse with each other.
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
-const sessionMaxTimeout = (100 * 10 * 1000); //16.xx minutes
+const sessionMaxTimeout = 1000 * 60;//(100 * 10 * 1000); //16.xx minutes
 const passport = require('passport');
 const strategy = require('passport-local').Strategy;
 const ensureLogin = require('connect-ensure-login');
@@ -55,7 +55,7 @@ app.use('/apps/', [ensureLogin.ensureLoggedIn('/login'), require('./server-modul
 
 
 //Login Router
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
+app.get('/login', (req, res, next) => { res.append('hub-logout','hub-logout'); next(); }, (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
 app.post('/login', [passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => res.redirect('/apps/')]);
 app.post('/logout', [(req, res) => {
     req.logout();

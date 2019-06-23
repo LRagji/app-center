@@ -47,10 +47,17 @@ A simple application host, to serve multiple apps as a combined application.
 
 This branch contains code for service worker experiment for folowing reasons
 1. Can service worker be used for onboarding an application without making them go through any changes?
+
     Yes but it is not recommended cause 
     1. Service workers are in draft specs even though they are supported by all major browsers(Tested with Chrome,Firefox).
-    2. Resusing same route will collapse URL concept, which means multiple resources will share the same URL which may cause collision of caching the response.
+    2. Resusing same route will collapse URL concept, which means multiple resources will share the same URL which may cause collision of caching the response.(Caching can still be solved with SW Appname-keyed caching.)
+    3. What happens when base site requests for service worker registration at root level.(Cannot let this happen) 
+
 2. Can service workers be used for detecting a sesssion timeout?
+
+    Yes, but with one gotcha what happens when client has its own service worker.
+    
+3. Can service worker be used for completely as apphub?
 
 
 
