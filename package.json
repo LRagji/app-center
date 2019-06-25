@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node hub.js",
+    "start": "node hub.js",
+    "scss-compile": "npx node-sass client-modules/styles/mantle.scss client-modules/styles/mantle.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
@@ -22,5 +24,9 @@
     "memory-cache": "^0.2.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "node-sass": "^4.12.0"
   }
 }

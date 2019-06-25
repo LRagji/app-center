@@ -22,7 +22,7 @@ appRouter.use('/app2/*', (req, res, next) => {  //TODO: Example App2
 });
 
 appRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../hub.html'));
+    res.sendFile(path.join(__dirname + '/hosting-content/secured/app-center.html'));
 });
 
 function generateHeaders(username) {

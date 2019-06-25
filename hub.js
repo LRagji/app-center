@@ -49,10 +49,8 @@ passport.deserializeUser(function (stringUser, cb) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //Secure Router
 app.use('/apps/', [ensureLogin.ensureLoggedIn('/login'), require('./server-modules/proxy-service')]);
-
 
 //Login Router
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
@@ -63,7 +61,10 @@ app.post('/logout', [(req, res) => {
     res.redirect('/login');
 }]);
 
+//Static Router mounted on Root not secured.
+app.use('/',express.static(path.join(__dirname + '/server-modules/hosting-content/unsecured/')));
+
 //TODO: Non Prod Just for easy access
-app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
+//app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
 
 app.listen(port, () => console.log(`Spartans Hub active on port ${port}!`))

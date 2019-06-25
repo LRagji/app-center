@@ -1,0 +1,7 @@
+$font-size-base:0.8rem; //Since Mantle has font size of 13.5px converting that to rem yields this approx magic number.
+$enable-responsive-font-sizes:true; //This is for responsive text.
+
+$primary: #103d4c;
+
+//Import all of bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";

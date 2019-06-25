@@ -28,6 +28,7 @@ A simple application host, to serve multiple apps as a combined application.
 1. You may see login screen within a logged in session this is cause of the session timeout problem, I am actively working on it.
 2. The app is non polished one day worth of work.(Test,Session Management,User Logins,UX needs to be completed.)
 3. Context based navigation or Data transfer between apps is currently achived with either `window.parent` or `postmessages`
+4. Apps with Content Security Policy directive: "frame-ancestors 'none'" will not work.
 
 <!-- ## Feature's
 1. Complete abstraction at client side -->
