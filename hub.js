@@ -1,67 +1,45 @@
+
 const express = require('express');
-const app = express();
 const port = process.env.PORT || 4000;
 const path = require('path');
 const cookieSecret = "retaliation"; //TODO:Move to secure store
 const cookieName = "hub-db89960b1248";// This should be a unique ID else session will collapse with each other.
-const cookieParser = require('cookie-parser')
-const session = require('express-session');
 const sessionMaxTimeout = (100 * 10 * 1000); //16.xx minutes
-const passport = require('passport');
-const strategy = require('passport-local').Strategy;
-const ensureLogin = require('connect-ensure-login');
+const securedExpress = require('./server-modules/secured-session-server');
+const proxyRouter = require('./server-modules/proxy-service');
+const staticResourcesRouter = express.static(path.join(__dirname + '/server-modules/hosting-content/unsecured/'));
 
+const securedServer = new securedExpress(cookieName, cookieSecret, sessionMaxTimeout,
+    (username, password, done) => {
+        //Failure Example
+        //return done(null, false, { message: 'Not a valid email ' + username });
+        //return done(null, false, { message: 'Password fails length validation [50,1] ' + username });
 
-app.use(cookieParser(cookieSecret));
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(session({
-    name: cookieName,
-    secret: cookieSecret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, maxAge: sessionMaxTimeout }
-}))
+        //Sucess Example
+        return done(null, { id: username });
+    }
+);
 
-app.use('/', (req, res, next) => {
+const debugRouter = express();
+debugRouter.use('/', (req, res, next) => {
     console.log(req.sessionID + " " + req.path);
     next();
 })
 
-passport.use(new strategy((username, password, done) => {
-    //Failure Example
-    //return done(null, false, { message: 'Not a valid email ' + username });
-    //return done(null, false, { message: 'Password fails length validation [50,1] ' + username });
-
-    //Sucess Example
-    return done(null, { id: username });
-}));
-
-passport.serializeUser(function (user, cb) {
-    //TODO:Send only userid, else encrypt the contents.
-    cb(null, JSON.stringify(user));
-});
-
-passport.deserializeUser(function (stringUser, cb) {
-    //TODO:receive only userid, else decrypt the contents.
-    cb(null, JSON.parse(stringUser));
-});
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-//Secured Router
-app.use('/apps/', [ensureLogin.ensureLoggedIn('/login'), require('./server-modules/proxy-service')]);
-
 //Login Router
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
-app.post('/login', [passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => res.redirect('/apps/')]);
-app.post('/logout', [(req, res) => {
+const userAuthenticationRouter = express();
+userAuthenticationRouter.get('/login', (req, res) => res.sendFile(path.join(__dirname + '/login.html')));
+userAuthenticationRouter.post('/login', [securedServer.authenticate('/login'), (req, res) => res.redirect('/apps/')]);
+userAuthenticationRouter.post('/logout', [(req, res) => {
     req.logout();
     req.session.destroy();
     res.redirect('/login');
 }]);
 
-//Static Router mounted on Root not secured.
-app.use('/',express.static(path.join(__dirname + '/server-modules/hosting-content/unsecured/')));
+//Unsecured Router
+securedServer.ungaurdedRoute("/", [debugRouter,userAuthenticationRouter,staticResourcesRouter]);
 
-app.listen(port, () => console.log(`App-Center active on port ${port}!`));
+//Secured Router
+securedServer.gaurdedRoute("/apps/", proxyRouter, '/login');
+
+securedServer.listen(port, () => console.log(`App-Center active on port ${port}!`));
