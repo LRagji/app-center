@@ -1,16 +1,15 @@
 const express = require('express');
 const appRouter = express();
-const path = require('path');
 
 module.exports = class LoginRouter {
-    constructor(securedServer) {
+    constructor(securedServer, constants) {
 
-        appRouter.get('/login', (req, res) => res.sendFile(path.join(__dirname + '/hosting-content/unsecured/login/login.html')));
-        appRouter.post('/login', [securedServer.authenticate('/login'), (req, res) => res.redirect('/apps/')]);
-        appRouter.post('/logout', [(req, res) => {
+        appRouter.get(constants.hostingUrls.loginPageUrl, (req, res) => res.sendFile(constants.loginPagePath));
+        appRouter.post(constants.hostingUrls.loginPageUrl, [securedServer.authenticate(constants.hostingUrls.loginPageUrl), (req, res) => res.redirect(constants.hostingUrls.applicationsUrl)]);
+        appRouter.post(constants.hostingUrls.logoutPageUrl, [(req, res) => {
             req.logout();
             req.session.destroy();
-            res.redirect('/login');
+            res.redirect(constants.hostingUrls.loginPageUrl);
         }]);
 
         this.router = appRouter;

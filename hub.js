@@ -1,31 +1,28 @@
 
 const express = require('express');
-const port = process.env.PORT || 4000;
-const path = require('path');
-const cookieSecret = "retaliation"; //TODO:Move to secure store
-const cookieName = "hub-db89960b1248";// This should be a unique ID else session will collapse with each other.
-const sessionMaxTimeout = (100 * 10 * 1000); //16.xx minutes
+const configConstants = require('./server-modules/config-constants');
+const constants = new configConstants('', __dirname);
 const authentictionRouter = require('./server-modules/login-router');
 const securedExpress = require('./server-modules/secured-session-server');
 const proxyRouter = require('./server-modules/proxy-router');
-const staticResourcesRouter = express.static(path.join(__dirname + '/server-modules/hosting-content/unsecured/resources/'));
-const securedServer = new securedExpress(cookieName, cookieSecret, sessionMaxTimeout, validateLogin);
-const userLogin = new authentictionRouter(securedServer);
+const staticResourcesRouter = express.static(constants.resourcesFolder);
+const securedServer = new securedExpress(constants.cookieName, constants.cookieSecret, constants.sessionMaxTimeout, validateLogin);
+const userLogin = new authentictionRouter(securedServer,constants);
 
 const debugRouter = express();
-debugRouter.use('/', (req, res, next) => {
+debugRouter.use(constants.hostingUrls.rootUrl, (req, res, next) => {
     console.log(req.sessionID + " " + req.path);
     next();
 })
 
 //Unsecured Router
-securedServer.ungaurdedRoute("/", [debugRouter, userLogin.router, staticResourcesRouter]);
+securedServer.ungaurdedRoute(constants.hostingUrls.rootUrl, [debugRouter, userLogin.router, staticResourcesRouter]);
 
 //Secured Router
-securedServer.gaurdedRoute("/apps/", proxyRouter, '/login');
+securedServer.gaurdedRoute(constants.hostingUrls.applicationsUrl, proxyRouter, constants.hostingUrls.loginPageUrl);
 
 //Activate Server
-securedServer.listen(port, () => console.log(`App-Center active on port ${port}!`));
+securedServer.listen(constants.hostingPort, () => console.log(`App-Center active on port ${constants.hostingPort}!`));
 
 function validateLogin(username, password, done) {
     //Failure Example
