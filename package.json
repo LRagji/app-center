@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node hub.js",
-    "scss-compile": "npx node-sass client-modules/styles/mantle.scss client-modules/styles/mantle.css",
+    "scss-compile": "npx node-sass server-modules/hosting-content/unsecured/resources/styles/mantle.scss server-modules/hosting-content/unsecured/resources/styles/mantle.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
