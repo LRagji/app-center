@@ -11,7 +11,7 @@ module.exports = class ConfigurableConstants {
 
         this.sessionMaxTimeout = (100 * 10 * 1000); //16.xx minutes
 
-        this.resourcesFolder = path.join(currentRootDirectory + '/server-modules/hosting-content/unsecured/resources/');
+        this.resourcesFolder = path.join(currentRootDirectory + '/hosting-modules/un-secured/static/');
         this.loginPagePath = path.join(currentRootDirectory + '/server-modules/hosting-content/unsecured/login/login.html');
 
         this.hostingUrls = {
