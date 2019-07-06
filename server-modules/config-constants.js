@@ -17,7 +17,7 @@ module.exports = class ConfigurableConstants {
         this.hostingUrls = {
             rootUrl: "/"
         }
-        this.hostingUrls.notfound = this.hostingUrls.rootUrl + "404.html";
+        this.hostingUrls.notfoundUrl = this.hostingUrls.rootUrl + "404.html";
         this.hostingUrls.loginPageUrl = this.hostingUrls.rootUrl + "login";
         this.hostingUrls.logoutPageUrl = this.hostingUrls.rootUrl + "logout";
         this.hostingUrls.applicationsUrl = this.hostingUrls.rootUrl + "apps";

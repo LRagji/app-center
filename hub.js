@@ -19,7 +19,7 @@ debugRouter.use(constants.hostingUrls.rootUrl, (req, res, next) => {
 securedServer.ungaurdedRoute(constants.hostingUrls.rootUrl, [debugRouter, userLogin.router, staticResourcesRouter]);
 
 //Secured Router
-securedServer.gaurdedRoute(constants.hostingUrls.applicationsUrl, proxyRouter, constants.hostingUrls.loginPageUrl);
+securedServer.gaurdedRoute(constants.hostingUrls.applicationsUrl, proxyRouter, constants.hostingUrls.notfoundUrl);
 
 //Activate Server
 securedServer.listen(constants.hostingPort, () => console.log(`App-Center active on port ${constants.hostingPort}!`));
