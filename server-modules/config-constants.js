@@ -18,9 +18,10 @@ module.exports = class ConfigurableConstants {
             rootUrl: "/"
         }
         this.hostingUrls.notfoundUrl = this.hostingUrls.rootUrl + "404.html";
-        this.hostingUrls.loginPageUrl = this.hostingUrls.rootUrl + "login";
-        this.hostingUrls.logoutPageUrl = this.hostingUrls.rootUrl + "logout";
-        this.hostingUrls.applicationsUrl = this.hostingUrls.rootUrl + "apps";
+        this.hostingUrls.loginPageUrl = this.hostingUrls.rootUrl + "login/";
+        this.hostingUrls.logoutPageUrl = this.hostingUrls.rootUrl + "logout/";
+        this.hostingUrls.applicationsUrl = this.hostingUrls.rootUrl + "apps/";
+        this.hostingUrls.tenantsUrl = this.hostingUrls.rootUrl + "tenants/";
 
     }
 }
