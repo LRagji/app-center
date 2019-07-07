@@ -46,3 +46,22 @@ A simple application host, to serve multiple apps as a combined application.
 10. Use service worker for application url redirections. 
 
 
+Every tenant needs to have 
+1)Login Logout
+2)Independent login strategy
+3)Apps urls
+4)Non Authenticated Home Page
+
+EG:
+/resources/                               <- Static resources not secured
+
+/tenants/{tenantname}/                    <-Home page (Unsecured)
+/tenants/{tenantname}/Login/              <-Login Page (Unsecured)
+/tenants/{tenantname}/Logout/             <-Logout Page (Unsecured)
+
+/tenants/{tenantname}/apps/*              <-AppCenter Page and Deep Linking (Secured with tenant login strategy)
+/tenants/{tenantname}/proxy/{appname}     <-Applications Page (Secured with tenant login strategy)
+
+Future:
+Tenancy Management app inside admin Tenant?
+
