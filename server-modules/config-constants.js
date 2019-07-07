@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = class ConfigurableConstants {
     constructor(constantsFilepath, currentRootDirectory) {
 
+        this.urlSeperator="/";
+
         this.hostingPort = process.env.PORT || 4000;
 
         this.cookieSecret = "retaliation";
@@ -13,6 +15,7 @@ module.exports = class ConfigurableConstants {
 
         this.resourcesFolder = path.join(currentRootDirectory + '/hosting-modules/un-secured/static/');
         this.loginPagePath = path.join(currentRootDirectory + '/server-modules/hosting-content/unsecured/login/login.html');
+        this.appcenterPagePath = path.join(currentRootDirectory + '/hosting-modules/secured/app-center.html');
 
         this.hostingUrls = {
             rootUrl: "/"
