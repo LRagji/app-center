@@ -2,7 +2,7 @@ function validateLogin(username, password, done) {
     //Failure Example
     //return done(null, false, { message: 'Not a valid email ' + username });
     //return done(null, false, { message: 'Password fails length validation [50,1] ' + username });
-
+    console.warn("User:" + username + " Pass:" + password + " Sucessfull");
     //Sucess Example
     return done(null, { id: username });
 }

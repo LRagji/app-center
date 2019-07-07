@@ -1,5 +1,4 @@
 const passport = require('passport');
-const strategy = require('passport-local').Strategy;
 const ensureLogin = require('connect-ensure-login');
 const express = require('express');
 const cookieParser = require('cookie-parser')
@@ -31,13 +30,16 @@ module.exports = class tenantApplication {
         this._loginUrl = this._homePageUrl + "login/";
         this._appUrl = this._homePageUrl + "apps/";
 
+        let auth = new Authentication(tenantInfo.authentication, passport, validateLogin);
+        tenantInfo.authentication = auth;
+
         console.log("");
         console.log("Routes for:" + this._homePageUrl);
         let sessionName = tenantInfo.name + shortid.generate();
         let app = this._createApplication(sessionName, tenantInfo.sessionSecret, tenantInfo.sessionTimeout);
-        app = this._addAuthentication(app, validateLogin);
+        app = this._addAuthentication(app, tenantInfo.authentication.strategy);
         app = this._hostHomePage(app, tenantInfo.homePagePath);
-        app = this._hostLoginRoute(app, tenantInfo.authentication.LoginPagePath, tenantInfo.tenantId);
+        app = this._hostLoginRoute(app, tenantInfo.authentication, tenantInfo.tenantId);
         app = this._hostLogoutRoute(app);
         app = this._hostAppCenterRoute(app, appcenterPagePath, tenantInfo.tenantId);
         app = this._hostProxyApplicationRoute(app, tenantInfo.applications, tenantInfo.tenantId);
@@ -45,8 +47,8 @@ module.exports = class tenantApplication {
         this.Application = app;
     }
 
-    _addAuthentication(app, validateLogin) {
-        passport.use(new strategy(validateLogin));
+    _addAuthentication(app, validateStrategy) {
+        passport.use(validateStrategy);
 
         passport.serializeUser(function (user, cb) {
             //TODO:Send only userid, else encrypt the contents.
@@ -85,19 +87,19 @@ module.exports = class tenantApplication {
         return app;
     }
 
-    _hostLoginRoute(app, loginPagePath, tenantId) {
-        console.log("   /login/" + " ---> " + loginPagePath);
-        app.get('/login/', (req, res) => { res.sendFile(loginPagePath) })
+    _hostLoginRoute(app, authInfo, tenantId) {
+        console.log("   /login/" + " ---> " + authInfo.loginPagePath);
+        app.get('/login/', (req, res) => { res.sendFile(authInfo.loginPagePath) })
 
-        app.post('/login/', [passport.authenticate('local', { failureRedirect: this._loginUrl }), (req, res) => {
+        app.post('/login/', authInfo.validateLoginMiddleware, (req, res) => {
             req.session.tenantId = tenantId;
             res.redirect(this._appUrl);
-        }]);
+        });
         return app;
     }
 
     _hostLogoutRoute(app) {
-        console.log("   /logout/" + " ---> logout and redirect to "+this._homePageUrl);
+        console.log("   /logout/" + " ---> logout and redirect to " + this._homePageUrl);
         app.post("/logout/", [(req, res) => {
             req.logout();
             req.session.destroy();
@@ -111,7 +113,6 @@ module.exports = class tenantApplication {
         app.get("/apps/*", ensureLogin.ensureLoggedIn(this._loginUrl), this._validateTenant(tenantId), (req, res) => res.sendFile(appcenterPagePath));
         return app;
     }
-
 
     _hostProxyApplicationRoute(expressApp, applications, tenantId) {
         applications.forEach(appInfo => {
@@ -150,5 +151,27 @@ module.exports = class tenantApplication {
                 res.redirect(this._loginUrl);
             }
         };
+    }
+}
+
+class Authentication {
+    constructor(authInfo, passport, validateLogin) {
+        this.loginPagePath = authInfo.loginPagePath;
+
+        let passportStrategy;
+        switch (authInfo.strategy) {
+            case "local":
+                passportStrategy = require('passport-local').Strategy;
+                this.strategy = new passportStrategy(validateLogin);
+                this.validateLoginMiddleware = passport.authenticate(authInfo.strategy, authInfo.options);
+                break;
+            case "basic":
+                passportStrategy = require('passport-http').BasicStrategy;
+                this.strategy = new passportStrategy(validateLogin);
+                this.validateLoginMiddleware = passport.authenticate(authInfo.strategy, authInfo.options);
+                break;
+            default:
+                throw new Error("Unknown authentication strategy:" + authInfo.strategy);
+        }
     }
 }

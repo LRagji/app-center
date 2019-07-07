@@ -15,8 +15,11 @@ module.exports = class configFacade {
             name: "dev01",
             id: "1e1bdb55-4396-44dd-90ea-65f98fbe22da",
             authentication: {
-                Strategy: "local",
-                LoginPagePath: path.join(this.constants.tenantFolderPath, "dev01-login.html"),
+                strategy: "local",
+                loginPagePath: path.join(this.constants.tenantFolderPath, "dev01-login.html"),
+                options: {
+                    failureRedirect: "/tenants/dev01/login/"
+                }
             },
             sessionTimeout: (100 * 10 * 1000), //16.xx minutes
             sessionSecret: "retaliation",
@@ -36,8 +39,11 @@ module.exports = class configFacade {
             name: "dev02",
             id: "1e1bdb55-4396-44dd-90ea-65f98fbe22d4",
             authentication: {
-                Strategy: "local",
-                LoginPagePath: path.join(this.constants.tenantFolderPath, "dev02-login.html"),
+                strategy: "basic",
+                loginPagePath: path.join(this.constants.tenantFolderPath, "dev02-login.html"),
+                options: {
+                    session: true
+                }
             },
             sessionTimeout: (100 * 10 * 1000), //16.xx minutes
             sessionSecret: "retaliation",
