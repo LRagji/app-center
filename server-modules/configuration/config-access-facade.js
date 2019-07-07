@@ -1,5 +1,5 @@
 
-const configConstants = require("../config-constants")
+const configConstants = require("./config-constants")
 
 module.exports = class configFacade {
     constructor(currentRootDirectory) {
