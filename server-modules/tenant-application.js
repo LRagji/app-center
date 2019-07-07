@@ -26,10 +26,14 @@ module.exports = class tenantApplication {
         this._hostProxyApplicationRoute = this._hostProxyApplicationRoute.bind(this);
         this._generateHeaders = this._generateHeaders.bind(this);
 
-        this._loginUrl = mountUrl + "login/";//TODO: See how can we remove this.
-        this._appUrl = mountUrl + "apps/";//TODO: See how can we remove this.
+        //URL Constants
+        this._homePageUrl = mountUrl;
+        this._loginUrl = this._homePageUrl + "login/";
+        this._appUrl = this._homePageUrl + "apps/";
 
-        let sessionName = tenantInfo.tenantName + shortid.generate();
+        console.log("");
+        console.log("Routes for:" + this._homePageUrl);
+        let sessionName = tenantInfo.name + shortid.generate();
         let app = this._createApplication(sessionName, tenantInfo.sessionSecret, tenantInfo.sessionTimeout);
         app = this._addAuthentication(app, validateLogin);
         app = this._hostHomePage(app, tenantInfo.homePagePath);
@@ -76,11 +80,13 @@ module.exports = class tenantApplication {
     }
 
     _hostHomePage(app, homePagePath) {
+        console.log("   /" + " ---> " + homePagePath);
         app.get("/", (req, res) => res.sendFile(homePagePath));
         return app;
     }
 
     _hostLoginRoute(app, loginPagePath, tenantId) {
+        console.log("   /login/" + " ---> " + loginPagePath);
         app.get('/login/', (req, res) => { res.sendFile(loginPagePath) })
 
         app.post('/login/', [passport.authenticate('local', { failureRedirect: this._loginUrl }), (req, res) => {
@@ -91,15 +97,17 @@ module.exports = class tenantApplication {
     }
 
     _hostLogoutRoute(app) {
+        console.log("   /logout/" + " ---> logout and redirect to "+this._homePageUrl);
         app.post("/logout/", [(req, res) => {
             req.logout();
             req.session.destroy();
-            res.redirect("/");
+            res.redirect(this._homePageUrl);
         }]);
         return app;
     }
 
     _hostAppCenterRoute(app, appcenterPagePath, tenantId) {
+        console.log("   /apps/*" + " ---> " + appcenterPagePath);
         app.get("/apps/*", ensureLogin.ensureLoggedIn(this._loginUrl), this._validateTenant(tenantId), (req, res) => res.sendFile(appcenterPagePath));
         return app;
     }
@@ -114,6 +122,7 @@ module.exports = class tenantApplication {
                     "headers": this._generateHeaders(req.user.id, tenantId), //TODO: This will depend on tenant auth info we are just mocking this for now.
                 })(req, res, next)
             });
+            console.log("   " + applicationUrl + " ---> " + appInfo.url);
         });
         return expressApp;
     }

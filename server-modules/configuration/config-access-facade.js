@@ -16,11 +16,32 @@ module.exports = class configFacade {
             id: "1e1bdb55-4396-44dd-90ea-65f98fbe22da",
             authentication: {
                 Strategy: "local",
-                LoginPagePath: path.join(this._currentRootDirectory, "/hosting-modules/un-secured/login/login.html"),
+                LoginPagePath: path.join(this.constants.tenantFolderPath, "dev01-login.html"),
             },
             sessionTimeout: (100 * 10 * 1000), //16.xx minutes
             sessionSecret: "retaliation",
-            homePagePath: "",
+            homePagePath: path.join(this.constants.tenantFolderPath, "/dev01.html"),
+            applications: [
+                {
+                    name: "app1",
+                    url: "https://alerts-dobara-hub.run.aws-usw02-pr.ice.predix.io/"
+                },
+                {
+                    name: "app2",
+                    url: "https://asset-dashboard.run.aws-usw02-pr.ice.predix.io/"
+                }
+            ]
+        },
+        {
+            name: "dev02",
+            id: "1e1bdb55-4396-44dd-90ea-65f98fbe22d4",
+            authentication: {
+                Strategy: "local",
+                LoginPagePath: path.join(this.constants.tenantFolderPath, "dev02-login.html"),
+            },
+            sessionTimeout: (100 * 10 * 1000), //16.xx minutes
+            sessionSecret: "retaliation",
+            homePagePath: path.join(this.constants.tenantFolderPath, "dev02.html"),
             applications: [
                 {
                     name: "app1",
