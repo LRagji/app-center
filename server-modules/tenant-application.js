@@ -9,9 +9,6 @@ const proxy = require('express-request-proxy');
 const jwt = require('jsonwebtoken');
 const cache = require('memory-cache');
 
-//TODO: Change Auth startegy using auth type of the tenant info object
-
-
 module.exports = class tenantApplication {
     constructor(tenantInfo, validateLogin, appcenterPagePath, mountUrl) {
 
